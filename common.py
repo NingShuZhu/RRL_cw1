@@ -6,17 +6,28 @@ from collections import deque
 from hyperparameters import *
 
 # STATE SPACE
+# x_vals = np.linspace(-X_LIMIT, X_LIMIT, N_BINS)
+# x_dot_vals = np.linspace(-X_VEL_LIMIT, X_VEL_LIMIT, N_BINS)
+# theta_vals = np.linspace(-THETA_LIMIT, THETA_LIMIT, N_BINS)
+# theta_dot_vals = np.linspace(-THETA_VEL_LIMIT, THETA_VEL_LIMIT, N_BINS)
+# mesh = np.meshgrid(x_vals, x_dot_vals, theta_vals, theta_dot_vals, indexing='ij')
+# state_tensor = np.array(mesh) # Shape: (4, N, N, N, N)
+
+# for 1.c
 x_vals = np.linspace(-X_LIMIT, X_LIMIT, N_BINS)
 x_dot_vals = np.linspace(-X_VEL_LIMIT, X_VEL_LIMIT, N_BINS)
-theta_vals = np.linspace(-THETA_LIMIT, THETA_LIMIT, N_BINS)
+theta_vals = np.linspace(-THETA_LIMIT, THETA_LIMIT, 90)
 theta_dot_vals = np.linspace(-THETA_VEL_LIMIT, THETA_VEL_LIMIT, N_BINS)
 mesh = np.meshgrid(x_vals, x_dot_vals, theta_vals, theta_dot_vals, indexing='ij')
-state_tensor = np.array(mesh) # Shape: (4, N, N, N, N)
+state_tensor = np.array(mesh) # Shape: (4, N, N, 90, N)
+
+V = np.zeros((N_BINS, N_BINS, 90, N_BINS))
+Q = np.zeros((N_BINS, N_BINS, 90, N_BINS, 2))
 
 # EMPTY ARRAYS
 ACTION_VALS = np.array([0.0, 1.0]) 
-V = np.zeros((N_BINS, N_BINS, N_BINS, N_BINS))
-Q = np.zeros((N_BINS, N_BINS, N_BINS, N_BINS, 2))
+# V = np.zeros((N_BINS, N_BINS, N_BINS, N_BINS))
+# Q = np.zeros((N_BINS, N_BINS, N_BINS, N_BINS, 2))
 
 # Pre-calculate which states in the grid are already terminal for efficient computation
 is_terminal = (state_tensor[2] <= theta_vals[0]) | (state_tensor[2] >= theta_vals[-1]) | \
@@ -70,8 +81,10 @@ def reward_function(state, terminated):
 
 # Quadratic cost function
 def quadratic_cost(state):
+    return CART_COST_WEIGHT * state[0]**2 + POLE_ANGLE_COST_WEIGHT * state[2]**2
+    # return 0
     ### FILL IN HERE ### hint: CART_COST_WEIGHT, POLE_ANGLE_COST_WEIGHT
-    raise NotImplementedError("Quadratic cost function not implemented")
+    # raise NotImplementedError("Quadratic cost function not implemented")
 
 def evaluate_agent(env, type, policy=None, Q=None):
     if type == "Q":

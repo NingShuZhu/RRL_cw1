@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-
+from matplotlib.ticker import MultipleLocator
 
 def plot_policy_value(policy, V, N_bins, x_vals, theta_vals):
     mid = N_bins // 2
@@ -23,8 +23,13 @@ def plot_policy_value(policy, V, N_bins, x_vals, theta_vals):
     ax1.set_title(r"Value Function $V(x, \dot{x}=0, \theta, \dot{\theta}=0)$")
     ax2.set_title(r"Policy $\pi(s)$")    
 
+    # 1.c
+    for ax in [ax1, ax2]:
+        ax.yaxis.set_major_locator(MultipleLocator(2))
+    t_edges = np.linspace(np.rad2deg(theta_vals[0]) - dt/2, np.rad2deg(theta_vals[-1]) + dt/2, 90 + 1)
+
     x_edges = np.linspace(x_vals[0] - dx/2, x_vals[-1] + dx/2, N_bins + 1)
-    t_edges = np.linspace(np.rad2deg(theta_vals[0]) - dt/2, np.rad2deg(theta_vals[-1]) + dt/2, N_bins + 1)
+    # t_edges = np.linspace(np.rad2deg(theta_vals[0]) - dt/2, np.rad2deg(theta_vals[-1]) + dt/2, N_bins + 1)
 
     for ax in [ax1, ax2]:
         ax.set_xticks(x_edges, minor=True)

@@ -21,25 +21,42 @@ def value_iteration():
             next_indices = state_to_indices(next_states, [x_vals, x_dot_vals, theta_vals, theta_dot_vals])
 
             ### FILL IN HERE ###
-            raise NotImplementedError("Bellman update not implemented")
+            # raise NotImplementedError("Bellman update not implemented")
+            future_val = current_state_costs + GAMMA * V_old[next_indices]
             
             # Handle termination
             new_estimate = np.where(is_terminal[next_indices], TERMINAL_COST, future_val)
 
-            V_new.append(new_estimate)
+            V_new.append(new_estimate) # V_new = [Q(s,a0), Q(s,a1)] = Q_values
 
         ### FILL IN HERE ### 
-        raise NotImplementedError("Value update not implemented")
+        # raise NotImplementedError("Value update not implemented")
+        V = np.min(np.stack(V_new, axis=0), axis=0)
 
         ### FILL IN HERE ###
-        raise NotImplementedError("Check convergence not implemented")
+        # raise NotImplementedError("Check convergence not implemented")
+        diff = np.max(np.abs(V - V_old))
+
         print(f"[{it}] diff = {diff:.5f}", "value stats: ", np.min(V), np.max(V), np.mean(V), end='\r')
         if diff < DELTA: print(f"VI completed in {it} iterations with diff {diff:.5f}"); break
     return V
 
 def compute_policy(V):
     ### FILL IN HERE ### hint: Compute policy
-    raise NotImplementedError("Compute policy not implemented")
+    # raise NotImplementedError("Compute policy not implemented")
+    Q_values = []
+    current_state_costs = quadratic_cost(state_tensor)
+
+    for action in ACTION_VALS:
+        next_states = dynamics(state_tensor, action)
+        next_indices = state_to_indices(next_states, [x_vals, x_dot_vals, theta_vals, theta_dot_vals])
+        future_val = current_state_costs + GAMMA * V[next_indices]
+        new_estimate = np.where(is_terminal[next_indices], TERMINAL_COST, future_val)
+        Q_values.append(new_estimate)
+
+    Q_values = np.stack(Q_values, axis=0) # shape (n_actions, n_states)
+    policy = np.argmin(Q_values, axis=0) # shape (n_states,)
+
     return policy
 
 
