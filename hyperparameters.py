@@ -1,7 +1,7 @@
 import numpy as np
 
 MAX_EPISODE_STEPS = 100
-NUM_EPISODES_EVAL = 1000 # Number of episodes to average the returns over
+NUM_EPISODES_EVAL = 10 # Number of episodes to average the returns over
 
 # STATE SPACE PARAMETERS
 N_BINS = 30

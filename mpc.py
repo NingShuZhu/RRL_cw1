@@ -14,9 +14,9 @@ class CartpoleMPC:
         self.H = H          # Horizon length
         self.max_iters = max_iters    # iLQR iterations per time step
         ### FILL IN HERE ### hint: Q, R from provided cost function parameters
-        # self.Q = np.diag([...])
-        # self.R = np.array([[...]])
-        raise NotImplementedError("MPC/iLQR Parameters not implemented")
+        self.Q = np.diag([1, 0.1, 10, 0.1]) # State cost matrix (tune as needed)
+        self.R = np.array([[0.01]]) # (1, 1)
+        # raise NotImplementedError("MPC/iLQR Parameters not implemented")
 
         # Warm start buffer
         self.U_guess = np.zeros((self.H, 1))
@@ -62,7 +62,7 @@ class CartpoleMPC:
             Ks = [np.zeros((1, 4))] * self.H
             
             # Terminal Value Function derivatives
-            Vx = self.Q @ X[-1]
+            Vx = self.Q @ X[-1] # x[-1]: final state
             Vxx = self.Q
             
             for t in reversed(range(self.H)):
@@ -73,7 +73,41 @@ class CartpoleMPC:
                 lu = self.R @ U[t]
 
                 ### FILL IN HERE ### hint: Q-function derivatives, control gains, value function update
-                raise NotImplementedError("iLQR not implemented")
+                # Compute Q-function derivatives
+                # Qx = lx + A.T @ Vx
+                # Qu = lu + B.T @ Vx
+                # Qxx = self.Q + A.T @ Vxx @ A
+                # Quu = self.R + B.T @ Vxx @ B
+                # Qux = B.T @ Vxx @ A
+                # K = -np.linalg.solve(Quu, Qux)
+                # k = -np.linalg.solve(Quu, Qu)
+
+                # Compute control gains (K, k)
+                # K = -np.linalg.solve(Quu, Qu.T).T  # (1, 4)
+                # k = -np.linalg.solve(Quu, Qu)      # (1, 1)
+
+                # lambda_reg = 1e-4
+
+                Qx  = lx + A.T @ Vx
+                Qu  = lu + B.T @ Vx
+                Qxx = self.Q + A.T @ Vxx @ A
+                Quu = self.R + B.T @ Vxx @ B
+                Qux = B.T @ Vxx @ A
+
+                # Quu_reg = Quu + lambda_reg * np.eye(1)
+
+                # k = -np.linalg.solve(Quu_reg, Qu)
+                # K = -np.linalg.solve(Quu_reg, Qux)
+                k = -np.linalg.solve(Quu, Qu)
+                K = -np.linalg.solve(Quu, Qux)
+
+                Vx  = Qx + Qux.T @ k
+                Vxx = Qxx + Qux.T @ K
+
+                # Update value function derivatives
+
+                ks[t] = k
+                Ks[t] = K
                 
             # Forward Pass (Line search simplified for brevity)
             X_new = np.zeros_like(X)
@@ -82,8 +116,12 @@ class CartpoleMPC:
             
             for t in range(self.H):
                 ### FILL IN HERE ### hint: compute U_new[t] and X_new[t+1]
-                raise NotImplementedError("iLQR not implemented")
-            
+                # U_new[t] = U[t] + ks[t] + Ks[t] @ (X_new[t] - X[t])
+                # X_new[t+1] = dynamics(X_new[t], U_new[t], continuous_action=True)
+                alpha = 1.0  # Line search parameter (can be tuned)
+                U_new[t] = U[t] + alpha * ks[t] + Ks[t] @ (X_new[t] - X[t])
+                X_new[t+1] = dynamics(X_new[t], U_new[t], continuous_action=True)
+
             X, U = X_new, U_new
 
         ks = np.array(ks)
@@ -115,8 +153,8 @@ if __name__ == "__main__":
 
     # ----------------------
     USE_MPC = True  # Set to False for Open-Loop iLQR
-    DISTURBANCE = 0
-    H_MPC = 5
+    DISTURBANCE = 5
+    H_MPC = 40
     H_ILQR = 100
     # ----------------------
 
@@ -129,13 +167,13 @@ if __name__ == "__main__":
         print("Running in Closed-Loop MPC mode...")
 
         mpc = CartpoleMPC(H_MPC, max_iters=5)
-        returns = evaluate_agent(env, type="MPC", policy=mpc)
-        print_statistics(returns)
+        # returns = evaluate_agent(env, type="MPC", policy=mpc)
+        # print_statistics(returns)
         play_agent(play_env, type="MPC", policy=mpc)
     else:
         print("Running in Open-Loop iLQR mode...")
 
-        mpc = CartpoleMPC(H_ILQR, max_iters=5)
+        mpc = CartpoleMPC(H_ILQR, max_iters=20)
         state, _ = play_env.reset()
             
         while True:
