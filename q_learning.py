@@ -23,22 +23,37 @@ def run_q_learning(env,train_timesteps_M):
 
     for timestep in range(int(train_timesteps_M * 1e6)):
         
-        if epsilon_schedule:
-            ### FILL IN HERE ###
-            raise NotImplementedError("Epsilon schedule not implemented")
-        else:
-            current_epsilon = EPSILON
+        # if epsilon_schedule:
+        #     ### FILL IN HERE ###
+        #     raise NotImplementedError("Epsilon schedule not implemented")
+        # else:
+        #     current_epsilon = EPSILON
 
         if alpha_schedule:
             ### FILL IN HERE ###
-            raise NotImplementedError("Alpha schedule not implemented")
+            # raise NotImplementedError("Alpha schedule not implemented")
+            # current_alpha = ALPHA * (1 - episode / (train_timesteps_M * 1e6 / MAX_EPISODE_STEPS))
+            total_timesteps = int(train_timesteps_M * 1e6)
+            # current_alpha = ALPHA * (1 - timestep / total_timesteps)
+            MIN_ALPHA = 1e-5
+            current_alpha = max(
+                MIN_ALPHA,
+                ALPHA * (1 - timestep / total_timesteps)
+            )
         else:
             current_alpha = ALPHA
+
+        current_epsilon = EPSILON
+        # current_alpha = 0.03
 
         indices = state_to_indices(state, [x_vals, x_dot_vals, theta_vals, theta_dot_vals])
         
         ### FILL IN HERE ###
-        raise NotImplementedError("Action selection not implemented")
+        # raise NotImplementedError("Action selection not implemented")
+        if np.random.random() < current_epsilon:
+            action = np.random.choice([0, 1]) # epsilon-greedy action selection
+        else:
+            action = np.argmax(Q[indices])
 
         next_state, _, terminated, truncated, _ = env.step(int(action))
         next_indices = state_to_indices(next_state, [x_vals, x_dot_vals, theta_vals, theta_dot_vals])
@@ -48,7 +63,8 @@ def run_q_learning(env,train_timesteps_M):
         # Q-value update
         best_next_q = np.max(Q[next_indices])
         ### FILL IN HERE ###
-        raise NotImplementedError("Q-value update not implemented")
+        # raise NotImplementedError("Q-value update not implemented")
+        Q[indices][action] += current_alpha * (reward + GAMMA * best_next_q - Q[indices][action])
 
         state = next_state
         if terminated or truncated:

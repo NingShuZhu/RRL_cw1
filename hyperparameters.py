@@ -1,12 +1,12 @@
 import numpy as np
 
 MAX_EPISODE_STEPS = 100
-NUM_EPISODES_EVAL = 10 # Number of episodes to average the returns over
+NUM_EPISODES_EVAL = 1000 # Number of episodes to average the returns over
 
 # STATE SPACE PARAMETERS
 N_BINS = 30
 X_LIMIT = 2.4
-THETA_LIMIT = np.deg2rad(90) #12
+THETA_LIMIT = np.deg2rad(25) #12
 X_VEL_LIMIT = 4.8
 THETA_VEL_LIMIT = np.deg2rad(400)
 
@@ -23,4 +23,4 @@ DELTA = 0.01
 # Q-LEARNING PARAMETERS
 ALPHA = 0.1    # Learning rate
 EPSILON = 0.05 # Exploration rate
-TRAIN_TIMESTEPS_M = 0.2 # Number of timesteps to train for
+TRAIN_TIMESTEPS_M = 1.0 # Number of timesteps to train for
