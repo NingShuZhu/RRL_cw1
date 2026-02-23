@@ -52,3 +52,15 @@ def plot_returns(returns, timesteps):
     plt.grid(True)
     plt.tight_layout()
     plt.savefig('returns.png', dpi=300, bbox_inches='tight', pad_inches=0.05)
+
+
+def plot_returns_name(returns, timesteps, filename='returns.png'):
+    plt.figure()
+    plt.plot(timesteps, returns)
+    plt.xlabel('Timesteps (M)')
+    plt.ylabel('Return')
+    plt.title('Returns')
+    plt.grid(True)
+    plt.tight_layout()
+    plt.savefig(filename, dpi=300, bbox_inches='tight', pad_inches=0.05)
+    plt.close()

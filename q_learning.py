@@ -23,11 +23,14 @@ def run_q_learning(env,train_timesteps_M):
 
     for timestep in range(int(train_timesteps_M * 1e6)):
         
-        # if epsilon_schedule:
-        #     ### FILL IN HERE ###
-        #     raise NotImplementedError("Epsilon schedule not implemented")
-        # else:
-        #     current_epsilon = EPSILON
+        if epsilon_schedule:
+            ### FILL IN HERE ###
+            # raise NotImplementedError("Epsilon schedule not implemented")
+            # current_epsilon = EPSILON * (1 - episode / (train_timesteps_M * 1e6 / MAX_EPISODE_STEPS))
+            total_timesteps = int(train_timesteps_M * 1e6)
+            current_epsilon = EPSILON * (1 - episode / total_timesteps)
+        else:
+            current_epsilon = EPSILON
 
         if alpha_schedule:
             ### FILL IN HERE ###
@@ -43,7 +46,7 @@ def run_q_learning(env,train_timesteps_M):
         else:
             current_alpha = ALPHA
 
-        current_epsilon = EPSILON
+        # current_epsilon = EPSILON
         # current_alpha = 0.03
 
         indices = state_to_indices(state, [x_vals, x_dot_vals, theta_vals, theta_dot_vals])
@@ -95,8 +98,8 @@ if __name__ == "__main__":
     train_env.close()
 
     # play agent
-    play_env = CartPoleEnv(render_mode="human", x_threshold=X_LIMIT, theta_threshold_radians=THETA_LIMIT)
-    play_env = TimeLimit(play_env, max_episode_steps=MAX_EPISODE_STEPS)
-    play_agent(play_env, type="Q", Q=Q)
-    play_env.close()
+    # play_env = CartPoleEnv(render_mode="human", x_threshold=X_LIMIT, theta_threshold_radians=THETA_LIMIT)
+    # play_env = TimeLimit(play_env, max_episode_steps=MAX_EPISODE_STEPS)
+    # play_agent(play_env, type="Q", Q=Q)
+    # play_env.close()
 

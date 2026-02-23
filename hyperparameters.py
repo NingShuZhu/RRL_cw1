@@ -23,4 +23,4 @@ DELTA = 0.01
 # Q-LEARNING PARAMETERS
 ALPHA = 0.1    # Learning rate
 EPSILON = 0.05 # Exploration rate
-TRAIN_TIMESTEPS_M = 1.0 # Number of timesteps to train for
+TRAIN_TIMESTEPS_M = 10.0 # Number of timesteps to train for

@@ -1,0 +1,80 @@
+======================================
+alpha_schedule=False | epsilon_schedule=False | alpha_value=0.1
+======================================
+************ RETURN STATISTICS ************27
+Number of episodes: 1000
+Average return: -0.19249744713306427
+Standard deviation: 0.3888334035873413
+Min return: -1.9112601280212402
+Max return: -0.0008142871083691716
+*******************************************
+======================================
+alpha_schedule=False | epsilon_schedule=False | alpha_value=0.07
+======================================
+************ RETURN STATISTICS ************25
+Number of episodes: 1000
+Average return: -0.5737556219100952
+Standard deviation: 0.5222557783126831
+Min return: -2.005338191986084
+Max return: -0.0008207974024116993
+*******************************************
+======================================
+alpha_schedule=False | epsilon_schedule=False | alpha_value=0.05
+======================================
+************ RETURN STATISTICS ************066
+Number of episodes: 1000
+Average return: -0.04734714329242706
+Standard deviation: 0.1654035747051239
+Min return: -1.1668132543563843
+Max return: -0.001403845613822341
+*******************************************
+======================================
+alpha_schedule=False | epsilon_schedule=False | alpha_value=0.03
+======================================
+************ RETURN STATISTICS ************3
+Number of episodes: 1000
+Average return: -0.5412158966064453
+Standard deviation: 0.5239117741584778
+Min return: -1.780038595199585
+Max return: -0.00017617037519812584
+*******************************************
+======================================
+alpha_schedule=False | epsilon_schedule=False | alpha_value=0.01
+======================================
+************ RETURN STATISTICS ************75
+Number of episodes: 1000
+Average return: -0.10737984627485275
+Standard deviation: 0.30067840218544006
+Min return: -1.162247896194458
+Max return: -0.00019852058903779835
+*******************************************
+======================================
+alpha_schedule=True | epsilon_schedule=False | alpha_value=None
+======================================
+************ RETURN STATISTICS ************9525
+Number of episodes: 1000
+Average return: -0.003659152192994952
+Standard deviation: 0.0028749124612659216
+Min return: -0.0210585780441761
+Max return: -0.0004269477794878185
+*******************************************
+======================================
+alpha_schedule=True | epsilon_schedule=True | alpha_value=None
+======================================
+************ RETURN STATISTICS ************7325
+Number of episodes: 1000
+Average return: -0.015062830410897732
+Standard deviation: 0.09474238753318787
+Min return: -1.0951590538024902
+Max return: -0.00041301370947621763
+*******************************************
+======================================
+alpha_schedule=False | epsilon_schedule=True | alpha_value=None
+======================================
+************ RETURN STATISTICS ************706
+Number of episodes: 1000
+Average return: -0.043468885123729706
+Standard deviation: 0.18383873999118805
+Min return: -1.3321239948272705
+Max return: -0.0016749935457482934
+*******************************************
