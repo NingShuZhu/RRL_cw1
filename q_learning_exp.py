@@ -157,19 +157,19 @@ if __name__ == "__main__":
     # play_env.close()
 
     # ========= 1️⃣ baseline：不同alpha =========
-    for alpha in [0.1, 0.07, 0.05, 0.03, 0.01]:
-        run_single_experiment(
-            alpha_schedule=False,
-            epsilon_schedule=False,
-            alpha_value=alpha
-        )
+    # for alpha in [0.1, 0.07, 0.05, 0.03, 0.01]:
+    #     run_single_experiment(
+    #         alpha_schedule=False,
+    #         epsilon_schedule=False,
+    #         alpha_value=alpha
+    #     )
 
-    # ========= 2️⃣ alpha schedule =========
-    run_single_experiment(
-        alpha_schedule=True,
-        epsilon_schedule=False,
-        alpha_value=None
-    )
+    # # ========= 2️⃣ alpha schedule =========
+    # run_single_experiment(
+    #     alpha_schedule=True,
+    #     epsilon_schedule=False,
+    #     alpha_value=None
+    # )
 
     # ========= 3️⃣ epsilon+alpha schedule =========
     run_single_experiment(
@@ -179,8 +179,8 @@ if __name__ == "__main__":
     )
 
     # ========= epsilon schedule =========
-    run_single_experiment(
-        alpha_schedule=False,
-        epsilon_schedule=True,
-        alpha_value=None
-    )
+    # run_single_experiment(
+    #     alpha_schedule=False,
+    #     epsilon_schedule=True,
+    #     alpha_value=None
+    # )
