@@ -4,7 +4,7 @@ MAX_EPISODE_STEPS = 100
 NUM_EPISODES_EVAL = 1000 # Number of episodes to average the returns over
 
 # STATE SPACE PARAMETERS
-N_BINS = 40
+N_BINS = 30
 X_LIMIT = 2.4
 THETA_LIMIT = np.deg2rad(25) #12
 X_VEL_LIMIT = 4.8

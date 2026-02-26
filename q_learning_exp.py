@@ -171,16 +171,16 @@ if __name__ == "__main__":
     #     alpha_value=None
     # )
 
-    # ========= 3️⃣ epsilon+alpha schedule =========
-    run_single_experiment(
-        alpha_schedule=True,
-        epsilon_schedule=True,
-        alpha_value=None
-    )
-
-    # ========= epsilon schedule =========
+    # # ========= 3️⃣ epsilon+alpha schedule =========
     # run_single_experiment(
-    #     alpha_schedule=False,
+    #     alpha_schedule=True,
     #     epsilon_schedule=True,
     #     alpha_value=None
     # )
+
+    # ========= epsilon schedule =========
+    run_single_experiment(
+        alpha_schedule=False,
+        epsilon_schedule=True,
+        alpha_value=0.05
+    )
